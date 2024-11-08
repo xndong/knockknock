@@ -4,6 +4,7 @@ import traceback
 import functools
 import socket
 import telegram
+import requests
 
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -44,12 +45,13 @@ def telegram_sender(token: str, chat_id: int):
                 master_process = True
 
             if master_process:
-                contents = ['Your training has started 🎬',
+                contents = ['Your program has started running 🍀...',
                             'Machine name: %s' % host_name,
                             'Main call: %s' % func_name,
                             'Starting date: %s' % start_time.strftime(DATE_FORMAT)]
                 text = '\n'.join(contents)
-                bot.send_message(chat_id=chat_id, text=text)
+                # bot.send_message(chat_id=chat_id, text=text)
+                requests.post(f'https://api.telegram.org/bot7745411874:AAHqvL0TRSnVHeYdlAK9zs_1ZiQuaB4BNsw/sendMessage', proxies={}, json={'chat_id':chat_id, 'text':text})
 
             try:
                 value = func(*args, **kwargs)
@@ -71,7 +73,8 @@ def telegram_sender(token: str, chat_id: int):
                         contents.append('Main call returned value: %s'% "ERROR - Couldn't str the returned value.")
 
                     text = '\n'.join(contents)
-                    bot.send_message(chat_id=chat_id, text=text)
+                    # bot.send_message(chat_id=chat_id, text=text)
+                    requests.post(f'https://api.telegram.org/bot7745411874:AAHqvL0TRSnVHeYdlAK9zs_1ZiQuaB4BNsw/sendMessage', proxies={}, json={'chat_id':chat_id, 'text':text})
 
                 return value
 
