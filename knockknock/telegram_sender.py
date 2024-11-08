@@ -51,7 +51,7 @@ def telegram_sender(token: str, chat_id: int):
                             'Starting date: %s' % start_time.strftime(DATE_FORMAT)]
                 text = '\n'.join(contents)
                 # bot.send_message(chat_id=chat_id, text=text)
-                requests.post(f'https://api.telegram.org/bot7745411874:AAHqvL0TRSnVHeYdlAK9zs_1ZiQuaB4BNsw/sendMessage', proxies={}, json={'chat_id':chat_id, 'text':text})
+                requests.post(f'https://api.telegram.org/bot{token}/sendMessage', proxies={}, json={'chat_id':chat_id, 'text':text})
 
             try:
                 value = func(*args, **kwargs)
